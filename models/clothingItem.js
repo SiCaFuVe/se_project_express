@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const { INVALID_URL } = require("../utils/errors");
 
 const clothingItemSchema = new mongoose.Schema({
@@ -39,4 +40,6 @@ const clothingItemSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("item", clothingItemSchema);
+const ClothingItem = mongoose.model("ClothingItem", clothingItemSchema);
+
+module.exports = ClothingItem;
