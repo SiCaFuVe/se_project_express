@@ -29,13 +29,9 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res
-          .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: err.message });
+        return res.status(BAD_REQUEST_STATUS_CODE);
       }
-      return res
-        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+      return res.status(INTERNAL_SERVER_ERROR_STATUS_CODE);
     });
 };
 
@@ -56,9 +52,7 @@ const getUser = (req, res) => {
           .status(BAD_REQUEST_STATUS_CODE)
           .send({ message: INVALID_USER_ID_FORMAT });
       }
-      return res
-        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+      return res.status(INTERNAL_SERVER_ERROR_STATUS_CODE);
     });
 };
 

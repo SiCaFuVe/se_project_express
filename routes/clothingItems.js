@@ -10,10 +10,10 @@ const {
 
 router.get("/", getClothingItems);
 
-// Create a new clothing item
+// Create a new clothing item GET
 router.post("/", createClothingItem);
 
-// Delete a clothing item
+// Delete a clothing item DELETE
 router.delete("/:itemId", deleteClothingItem);
 
 // Like a clothing item
