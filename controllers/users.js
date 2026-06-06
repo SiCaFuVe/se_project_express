@@ -4,7 +4,6 @@ const {
   NOT_FOUND_STATUS_CODE,
   INTERNAL_SERVER_ERROR_STATUS_CODE,
   USER_NOT_FOUND,
-  INVALID_USER_ID_FORMAT,
 } = require("../utils/errors");
 
 // GET /users
@@ -16,7 +15,7 @@ const getUsers = (req, res) => {
       console.error(err);
       return res
         .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-        .send({ message: err.message });
+        .send({ message: "Server error" });
     });
 };
 
@@ -29,9 +28,13 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST_STATUS_CODE);
+        return res
+          .status(BAD_REQUEST_STATUS_CODE)
+          .send({ message: "Invalid data" });
       }
-      return res.status(INTERNAL_SERVER_ERROR_STATUS_CODE);
+      return res
+        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
+        .send({ message: "Server error" });
     });
 };
 
@@ -50,9 +53,11 @@ const getUser = (req, res) => {
       if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: INVALID_USER_ID_FORMAT });
+          .send({ message: "Invalid data" });
       }
-      return res.status(INTERNAL_SERVER_ERROR_STATUS_CODE);
+      return res
+        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
+        .send({ message: "Server error" });
     });
 };
 
