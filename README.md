@@ -17,6 +17,7 @@ The server manages clothing items, likes and dislikes.
 
 `npm run dev` — to launch the server with the hot reload feature
 
-### Testing
+## Project Pitch Video sprint 13
 
-Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+Check out [https://www.loom.com/share/3c07455fd6e34fdfa698f0672e0087de], where I describe my
+project and some challenges I faced while building it.

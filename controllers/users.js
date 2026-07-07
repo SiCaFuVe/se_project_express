@@ -4,28 +4,17 @@ const User = require("../models/user");
 const {
   BAD_REQUEST_STATUS_CODE,
   NOT_FOUND_STATUS_CODE,
+  CONNFLICT_STATUS_CODE,
+  UNAUTHORIZED_STATUS_CODE,
   INTERNAL_SERVER_ERROR_STATUS_CODE,
   USER_NOT_FOUND,
 } = require("../utils/errors");
 const { JWT_SECRET } = require("../utils/config");
 
-// GET /users
-
-const getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.send({ data: users }))
-    .catch((err) => {
-      console.error(err);
-      return res
-        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-        .send({ message: "Server error" });
-    });
-};
-
 // POST /users
 
 const createUser = (req, res) => {
-  const { name, about, avatar, email, password } = req.body;
+  const { name, avatar, email, password } = req.body;
   if (!password) {
     return res
       .status(BAD_REQUEST_STATUS_CODE)
@@ -34,7 +23,7 @@ const createUser = (req, res) => {
 
   return bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({ name, about, avatar, email, password: hash }))
+    .then((hash) => User.create({ name, avatar, email, password: hash }))
     .then((user) => {
       const userObj = user.toObject();
       delete userObj.password;
@@ -43,7 +32,9 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.code === 11000) {
-        return res.status(409).send({ message: "User already exists" });
+        return res
+          .status(CONNFLICT_STATUS_CODE)
+          .send({ message: "User already exists" });
       }
       if (err.name === "ValidationError") {
         return res
@@ -122,7 +113,9 @@ const login = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.message === "Invalid email or password") {
-        return res.status(401).send({ message: "Invalid email or password" });
+        return res
+          .status(UNAUTHORIZED_STATUS_CODE)
+          .send({ message: "Invalid email or password" });
       }
       return res
         .status(INTERNAL_SERVER_ERROR_STATUS_CODE)

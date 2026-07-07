@@ -3,6 +3,8 @@ const {
   BAD_REQUEST_STATUS_CODE,
   NOT_FOUND_STATUS_CODE,
   INTERNAL_SERVER_ERROR_STATUS_CODE,
+  FORBIDDEN_STATUS_CODE,
+  CONNFLICT_STATUS_CODE,
 } = require("../utils/errors");
 
 const getClothingItems = (req, res) => {
@@ -46,7 +48,7 @@ const deleteClothingItem = (req, res) => {
     .orFail()
     .then((item) => {
       if (item.owner.toString() !== currentUserId) {
-        return res.status(403).send({ message: "Forbidden" });
+        return res.status(FORBIDDEN_STATUS_CODE).send({ message: "Forbidden" });
       }
 
       return item.deleteOne().then(() => res.send({ data: item }));

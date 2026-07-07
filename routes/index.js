@@ -5,7 +5,7 @@ const { createUser, login } = require("../controllers/users");
 const { NOT_FOUND_STATUS_CODE } = require("../utils/errors");
 
 router.post("/signup", createUser);
-router.post("/login", login);
+router.post("/signin", login);
 router.use("/items", clothingItemsRouter);
 router.use("/users", userRouter);
 router.use((req, res) => {

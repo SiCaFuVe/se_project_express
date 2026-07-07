@@ -1,7 +1,10 @@
-# Use this workspace to collaborate
 workspace:
   id: 5b77fdce-2fd6-4456-8107-864bbbe568bd
-
 localResources:
   docs:
     - ../README.md
+  collections:
+    - ../postman/collections/Sprint 13 Tests
+cloudResources:
+  collections:
+    ../postman/collections/Sprint 13 Tests: 55251996-7ec2ca2c-4bb1-4f22-9e52-9dbeb260b1f2
