@@ -9,8 +9,8 @@ const {
   unlikeClothingItem,
 } = require("../controllers/clothingItems");
 
-router.use(auth);
 router.get("/", getClothingItems);
+router.use(auth);
 
 // Create a new clothing item POST
 router.post("/", createClothingItem);

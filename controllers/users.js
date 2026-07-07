@@ -124,7 +124,6 @@ const login = (req, res) => {
 };
 
 module.exports = {
-  getUsers,
   createUser,
   getCurrentUser,
   updateCurrentUser,
