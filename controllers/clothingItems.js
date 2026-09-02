@@ -1,24 +1,24 @@
 const ClothingItem = require("../models/clothingItem");
 const {
+  INTERNAL_SERVER_ERROR_STATUS_CODE,
   BAD_REQUEST_STATUS_CODE,
   NOT_FOUND_STATUS_CODE,
-  INTERNAL_SERVER_ERROR_STATUS_CODE,
   FORBIDDEN_STATUS_CODE,
-  CONNFLICT_STATUS_CODE,
+  BadRequestError,
+  NotFoundError,
+  ForbiddenError,
 } = require("../utils/errors");
 
-const getClothingItems = (req, res) => {
+const getClothingItems = (req, res, next) => {
   ClothingItem.find({})
     .then((items) => res.send({ data: items }))
     .catch((err) => {
       console.error(err);
-      res
-        .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-        .send({ message: "Server error" });
+      return next(err);
     });
 };
 
-const createClothingItem = (req, res) => {
+const createClothingItem = (req, res, next) => {
   const { name, weather, imageUrl } = req.body;
   const owner = req.user._id;
 
@@ -29,18 +29,13 @@ const createClothingItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        res
-          .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: "Invalid data provided" });
-      } else {
-        res
-          .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-          .send({ message: "Server error" });
+        return next(new BadRequestError("Invalid data provided"));
       }
+      return next(err);
     });
 };
 
-const deleteClothingItem = (req, res) => {
+const deleteClothingItem = (req, res, next) => {
   const { itemId } = req.params;
   const currentUserId = req.user._id.toString();
 
@@ -48,7 +43,7 @@ const deleteClothingItem = (req, res) => {
     .orFail()
     .then((item) => {
       if (item.owner.toString() !== currentUserId) {
-        return res.status(FORBIDDEN_STATUS_CODE).send({ message: "Forbidden" });
+        return next(new ForbiddenError("Forbidden"));
       }
 
       return item.deleteOne().then(() => res.send({ data: item }));
@@ -56,22 +51,16 @@ const deleteClothingItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res
-          .status(NOT_FOUND_STATUS_CODE)
-          .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
-        res
-          .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: "Invalid item ID format" });
-      } else {
-        res
-          .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-          .send({ message: "Server error" });
+        return next(new NotFoundError("Clothing item not found"));
       }
+      if (err.name === "CastError") {
+        return next(new BadRequestError("Invalid item ID format"));
+      }
+      return next(err);
     });
 };
 
-const likeClothingItem = (req, res) => {
+const likeClothingItem = (req, res, next) => {
   const { itemId } = req.params;
   const userId = req.user._id;
 
@@ -85,22 +74,16 @@ const likeClothingItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res
-          .status(NOT_FOUND_STATUS_CODE)
-          .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
-        res
-          .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: "Invalid item ID format" });
-      } else {
-        res
-          .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-          .send({ message: "Server error" });
+        return next(new NotFoundError("Clothing item not found"));
       }
+      if (err.name === "CastError") {
+        return next(new BadRequestError("Invalid item ID format"));
+      }
+      return next(err);
     });
 };
 
-const unlikeClothingItem = (req, res) => {
+const unlikeClothingItem = (req, res, next) => {
   const { itemId } = req.params;
   const userId = req.user._id;
 
@@ -114,18 +97,12 @@ const unlikeClothingItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
-        res
-          .status(NOT_FOUND_STATUS_CODE)
-          .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
-        res
-          .status(BAD_REQUEST_STATUS_CODE)
-          .send({ message: "Invalid item ID format" });
-      } else {
-        res
-          .status(INTERNAL_SERVER_ERROR_STATUS_CODE)
-          .send({ message: "Server error" });
+        return next(new NotFoundError("Clothing item not found"));
       }
+      if (err.name === "CastError") {
+        return next(new BadRequestError("Invalid item ID format"));
+      }
+      return next(err);
     });
 };
 
