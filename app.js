@@ -27,7 +27,9 @@ app.use(errors());
 app.use(errorHandler);
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/wtwr_db")
+  .connect(
+    "mongodb+srv://carolina:Rosapastel@cluster0.nsvgbwl.mongodb.net/?appName=Cluster0"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
   })
