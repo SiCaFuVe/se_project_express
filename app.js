@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+require("dotenv").config();
 const mainRouter = require("./routes/index");
 const errorHandler = require("./middlewares/errorHandler");
 const { errors } = require("celebrate");
@@ -14,6 +15,12 @@ app.use(cors());
 
 // Request logger should run before route handlers
 app.use(requestLogger);
+
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
 
 app.use("/", mainRouter);
 

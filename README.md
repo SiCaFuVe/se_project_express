@@ -17,6 +17,15 @@ The server manages clothing items, likes and dislikes.
 
 `npm run dev` — to launch the server with the hot reload feature
 
-## Project Pitch Video sprint 14
+## GitHub Repository
 
-Check out [https://www.loom.com/share/3c07455fd6e34fdfa698f0672e0087de], where I describe my project and some challenges I faced while building it.
+Front End [https://github.com/SiCaFuVe/se_project_react.git].
+
+## Deployed project link
+
+Check out [www.gpt-demo.ignorelist.com].
+
+## Project Pitch Video
+
+Check out [https://www.loom.com/share/129a71735f984b358509499ff5eb33f8], where I describe my
+project and some challenges I faced while building it.
