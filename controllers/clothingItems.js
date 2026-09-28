@@ -4,10 +4,10 @@ const {
   BAD_REQUEST_STATUS_CODE,
   NOT_FOUND_STATUS_CODE,
   FORBIDDEN_STATUS_CODE,
-  BadRequestError,
-  NotFoundError,
-  ForbiddenError,
 } = require("../utils/errors");
+const BadRequestError = require("../utils/errors/BadRequestError");
+const NotFoundError = require("../utils/errors/NotFoundError");
+const ForbiddenError = require("../utils/errors/ForbiddenError");
 
 const getClothingItems = (req, res, next) => {
   ClothingItem.find({})

@@ -8,40 +8,11 @@ const USER_NOT_FOUND = "User not found";
 const INVALID_USER_ID_FORMAT = "Invalid user ID format";
 const INVALID_URL = "You must enter a valid URL";
 
-class BadRequestError extends Error {
-  constructor(message = 'Bad request') {
-    super(message);
-    this.statusCode = BAD_REQUEST_STATUS_CODE;
-  }
-}
-
-class UnauthorizedError extends Error {
-  constructor(message = 'Unauthorized') {
-    super(message);
-    this.statusCode = UNAUTHORIZED_STATUS_CODE;
-  }
-}
-
-class ForbiddenError extends Error {
-  constructor(message = 'Forbidden') {
-    super(message);
-    this.statusCode = FORBIDDEN_STATUS_CODE;
-  }
-}
-
-class NotFoundError extends Error {
-  constructor(message = 'Not found') {
-    super(message);
-    this.statusCode = NOT_FOUND_STATUS_CODE;
-  }
-}
-
-class ConflictError extends Error {
-  constructor(message = 'Conflict') {
-    super(message);
-    this.statusCode = CONNFLICT_STATUS_CODE;
-  }
-}
+const BadRequestError = require("./errors/BadRequestError");
+const UnauthorizedError = require("./errors/UnauthorizedError");
+const ForbiddenError = require("./errors/ForbiddenError");
+const NotFoundError = require("./errors/NotFoundError");
+const ConflictError = require("./errors/ConflictError");
 
 module.exports = {
   BAD_REQUEST_STATUS_CODE,
